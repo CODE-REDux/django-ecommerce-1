@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0 maximum-scale=1, minimum-scale=1"
+    />
+    <title>E-commerce</title>
+    <!-- CSS only -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
+      crossorigin="anonymous"
+    />
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" />
+  </head>
+  <body>
+    <!-- navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <!-- 1st button on navbar is Ecommerce -->
+        <a class="navbar-brand" href="{% url 'store' %}">Ecommerce</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarTogglerDemo02"
+          aria-controls="navbarTogglerDemo02"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <!-- 2nd: Store : first and second button both are referenced to Store -->
+              <a class="nav-link" href="{% url 'store' %}">Store</a>
+            </li>
+          </ul>
+          <!-- REMOVE FORM TAG IF NOT REQUIRED -->
+          <!-- FORM TAG<form class="d-flex">
+            <input
+              class="form-control me-2"
+              type="search"
+              placeholder="Search"
+              aria-label="Search"
+            />
+            <button class="btn btn-outline-success" type="submit">
+              Search
+            </button>
+          </form> -->
+          <div class="form-inline my-2 my-lg-0">
+            <!-- 3rd  : Login option -->
+            <a href="#" class="btn btn-warning">Login</a>
+
+            <!-- 4th : cart image -->
+            <a href="{% url 'cart' %}" class="{% url 'cart' %}">
+              <img
+                id="cart-icon"
+                src="{% static 'images/cart.png' %} "
+                alt="broken link to cart image"
+              />
+            </a>
+          </div>
+          <p id="cart-total">0</p>
+          <!-- text color of 0 to be changed to white or something light -->
+        </div>
+      </div>
+    </nav>
+    <div class="container">{% block content %} {% endblock content %}</div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

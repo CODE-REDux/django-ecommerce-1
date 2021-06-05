@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import JsonResponse
 from .models import *
+import json
 # import all the models
 # importing JsonResponse so that we can return a message
 # Create your views here.
@@ -49,4 +50,10 @@ def checkout(request):
 
 
 def updateItem(request):
+    #  parse the data, as we are sending it as a string
+    data = json.loads(request.body)
+    productId = data['productId']
+    action = data['action']
+    print("Action: ", action)
+    print("productId: ", productId)
     return JsonResponse("Item was added", safe=False)

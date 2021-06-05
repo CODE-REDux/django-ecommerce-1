@@ -19,11 +19,6 @@
 
     <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" />
 
-    <!-- check if used is authenticated or not.
-            Adding this in main.html, as we want the user to be available at the top of every page
-
-      -->
-
     <script type="text/javascript">
       var user = "{{ request.user }}";
 
@@ -71,18 +66,7 @@
               <a class="nav-link" href="{% url 'store' %}">Store</a>
             </li>
           </ul>
-          <!-- REMOVE FORM TAG IF NOT REQUIRED -->
-          <!-- FORM TAG<form class="d-flex">
-            <input
-              class="form-control me-2"
-              type="search"
-              placeholder="Search"
-              aria-label="Search"
-            />
-            <button class="btn btn-outline-success" type="submit">
-              Search
-            </button>
-          </form> -->
+
           <div class="form-inline my-2 my-lg-0">
             <!-- 3rd  : Login option -->
             <a href="#" class="btn btn-warning">Login</a>

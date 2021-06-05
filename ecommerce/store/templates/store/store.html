@@ -3,17 +3,13 @@
 <div class="row">
   {% for product in products %}
   <div class="col-lg-4">
-    <!--   product.image.url will render the product images but now, we have defined
-    a property in Product class called imageURL, that will render the
-    images without crashing the page, when corresponding url is missing -->
     <img class="thumbnail" src="{{ product.imageURL }}" />
     <div class="box-element product">
       <h6><strong>{{product.name}}</strong></h6>
       <hr />
       <button
         data-product="{{product.id}}"
-        data-actions="add"
-        type="button"
+        data-action="add"
         class="btn btn-outline-primary add-btn update-cart"
       >
         Add to Cart

@@ -6,8 +6,6 @@ for (var i = 0; i < updateBtns.length; i++) {
         var productId = this.dataset.product
         var action = this.dataset.action
         console.log('ProductId: ', productId, 'Action: ', action)
-
-        // this user variable is available as we are inheriting it from main.html
         console.log('USER: ', user)
         if (user === 'AnonymousUser') {
             // 'AnonymousUser' is how Django renders anonymous user
@@ -30,7 +28,7 @@ function updateUserOrder(productId, action) {
             'Content-Type': 'application/json',
             'X-CSRFToken' : csrftoken
         },
-        body: JSON.stringify({'productId ': productId, 'action ': action})
+        body: JSON.stringify({'productId': productId, 'action': action})
     })
         // to return a promise to fetch
         // first, response value turned into json value

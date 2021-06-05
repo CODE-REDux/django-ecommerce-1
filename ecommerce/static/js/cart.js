@@ -39,6 +39,7 @@ function updateUserOrder(productId, action) {
         // we console out that data
         .then((data) => {
             console.log('data: ', data);  //"Item was added"
+            location.reload();
         })
 
 }

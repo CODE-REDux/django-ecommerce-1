@@ -3,7 +3,10 @@
 <div class="row">
   {% for product in products %}
   <div class="col-lg-4">
-    <img class="thumbnail" src="{% static 'images/placeholder.jpg' %}" />
+    <!--   product.image.url will render the product images but now, we have defined
+    a property in Product class called imageURL, that will render the
+    images without crashing the page, when corresponding url is missing -->
+    <img class="thumbnail" src="{{ product.imageURL }}" />
     <div class="box-element product">
       <h6><strong>{{product.name}}</strong></h6>
       <hr />

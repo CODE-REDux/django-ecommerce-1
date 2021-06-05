@@ -124,7 +124,16 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
 
+# if we don't setup media root, else the images will go directly to the root
+# of the dir. But we want them to go in /static/images/
 
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
+
+# we have to set media_url, so that we can actually render the product's image.
+# also, so that we can access each of the images that is there in our static files
+# like http://127.0.0.1:8000/images/book.jpg should show us the image of book
+
+MEDIA_URL = '/images/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field

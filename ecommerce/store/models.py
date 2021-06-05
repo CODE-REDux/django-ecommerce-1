@@ -15,8 +15,6 @@ class Customer(models.Model):
     def __str__(self):
         return self.name
 
-# model for product
-
 
 class Product(models.Model):
     name = models.CharField(max_length=200)
@@ -24,11 +22,21 @@ class Product(models.Model):
     # if is digital, it can't be shipped
     digital = models.BooleanField(default=False, null=True, blank=True)
     # image
+    image = models.ImageField(null=True, blank=True)
 
     def __str__(self):
         return self.name
 
-# model for order
+    # when we don't have url for an image, it would send an empty url,
+    # and prevent the whole page from crashing, when image url is absent.
+
+    @property
+    def imageURL(self):
+        try:
+            url = self.image.url
+        except:
+            url = ''
+        return url
 
 
 class Order(models.Model):
@@ -42,8 +50,6 @@ class Order(models.Model):
     def __str__(self):
         return str(self.id)
 
-# an item can be selected mor than once
-
 
 class OrderItem(models.Model):
     product = models.ForeignKey(
@@ -54,7 +60,6 @@ class OrderItem(models.Model):
     date_added = models.DateTimeField(auto_now_add=True)
 
 
-# shipping model : to get customer info, billing info etc
 class ShippingAddress(models.Model):
     customer = models.ForeignKey(
         Customer, on_delete=models.SET_NULL, null=True)

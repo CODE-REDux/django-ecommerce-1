@@ -13,10 +13,10 @@
       <table class="table">
         <tr>
           <th>
-            <h5>Items:<strong>3</strong></h5>
+            <h5>Items:<strong>{{ order.get_cart_items }}</strong></h5>
           </th>
           <th>
-            <h5>Total:<strong>$43</strong></h5>
+            <h5>Total:<strong>${{ order.get_cart_total }}</strong></h5>
           </th>
           <th>
             <a
@@ -44,16 +44,17 @@
       </div>
 
       <!-- it will show the items in the list now: for checkout -->
+      {% for item in items %}
       <div class="cart-row">
         <!-- first div is for image -->
         <div style="flex: 2">
-          <img class="row-image" src="{% static 'images/placeholder.jpg' %}" />
+          <img class="row-image" src="{{ item.product.imageURL}}" />
         </div>
-        <div style="flex: 2">Product 1</div>
-        <div style="flex: 1">$20</div>
+        <div style="flex: 2">{{ item.product.name }}</div>
+        <div style="flex: 1">{{ item.product.price | floatformat:2 }}</div>
         <!-- quantity class: to add the arrow-up and arrow-down images -->
         <div style="flex: 1">
-          <p class="quantity">2</p>
+          <p class="quantity">{{ item.quantity }}</p>
           <div class="quantity">
             <img
               class="chg-quantity"
@@ -65,8 +66,9 @@
             />
           </div>
         </div>
-        <div style="flex: 1">$40</div>
+        <div style="flex: 1">{{ item.get_total }}</div>
       </div>
+      {% endfor %}
     </div>
   </div>
 

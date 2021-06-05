@@ -84,7 +84,8 @@
     <br />
     <!--  can experiment by removing the hidden attribute -->
     <div class="box-element hidden" id="payment-info">
-      <small> Paypal Options </small>
+      <small>Paypal Options</small>
+      <div id="paypal-button-container"></div>
     </div>
   </div>
 
@@ -102,14 +103,13 @@
       <div class="cart-row">
         <!-- first div is for image -->
         <div style="flex: 2">
-          <img class="row-image" src="{{ item.product.imageURL }}" />
+          <img class="row-image" src="{{item.product.imageURL}}" />
         </div>
         <div style="flex: 2"><p>{{ item.product.name }}</p></div>
         <div style="flex: 1">
           <p>${{ item.product.price | floatformat:2 }}</p>
         </div>
-        <!-- quantity class: to add the arrow-up and arrow-down images -->
-        <div style="flex: 1"><p>{{ item.quantity }}</p></div>
+        <div style="flex: 1"><p>x{{ item.quantity }}</p></div>
       </div>
       {% endfor %}
       <h5>Items: {{ order.get_cart_items }}</h5>
@@ -119,5 +119,21 @@
     </div>
   </div>
 </div>
+<!-- we are writing this JS code as inline, as we only need it on this page only-->
+<script type="text/javascript">
+  var shipping = "{{order.shipping}}";
+
+  // shipping contains a string value
+  if (shipping == "False") {
+    document.getElementById("shipping-info").innerHTML = "";
+  }
+  var form = document.getElementById("form");
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    console.log("Form submitted...");
+    document.getElementById("form-button").classList.add("hidden");
+    document.getElementById("payment-info").classList.remove("hidden");
+  });
+</script>
 
 {% endblock content %}

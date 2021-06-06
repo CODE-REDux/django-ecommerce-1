@@ -50,7 +50,18 @@ class Order(models.Model):
     def __str__(self):
         return str(self.id)
 
+    @property
+    def shipping(self):
+        shipping = False
+        orderitems = self.orderitem_set.all()
+        for i in orderitems:
+            if i.product.digital == False:
+                shipping = True
+                break
+        return shipping
+
     # get_card_total is dependent on get_total -> so, we first wrote get_total
+
     @property
     def get_cart_total(self):
         orderitems = self.orderitem_set.all()
@@ -78,15 +89,6 @@ class OrderItem(models.Model):
         total = self.product.price * self.quantity
         return total
         # now, we can call this quantity in the template 'cart.html'
-
-    @property
-    def shipping(self):
-        shipping = False
-        orderitems = self.orderitem_set.all()
-        for i in orderitems:
-            if i.product.digital == False:
-                shipping = True
-        return shipping
 
 
 class ShippingAddress(models.Model):

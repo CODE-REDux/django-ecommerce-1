@@ -36,6 +36,7 @@ def cart(request):
         # it will get all the items that have the 'order' as the parent
         items = order.orderitem_set.all()
         cartItems = order.get_cart_items
+
     else:
         # manually set all the values for the guest user
         # user not logged in -> unauthenticated
@@ -54,6 +55,7 @@ def checkout(request):
             customer=customer, complete=False)
         items = order.orderitem_set.all()
         cartItems = order.get_cart_items
+        print("order.shipping:", order.shipping)
     else:
 
         items = []
@@ -88,4 +90,8 @@ def updateItem(request):
 
     if orderItem.quantity <= 0:
         orderItem.delete()
-    return JsonResponse("Item was added", safe=False)
+
+    if action == 'add':
+        return JsonResponse("Item was added", safe=False)
+    elif action == 'remove':
+        return JsonResponse("Item was removed", safe=False)

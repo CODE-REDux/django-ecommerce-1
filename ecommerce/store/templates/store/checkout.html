@@ -4,7 +4,6 @@
   <div class="col-lg-6">
     <div class="box-element" id="form-wrapper">
       <form id="form">
-        <!-- Input user info for billing purposes -->
         <div id="user-info">
           <div class="form-field">
             <input
@@ -12,7 +11,7 @@
               class="form-control"
               type="text"
               name="name"
-              placeholder="Name..."
+              placeholder="Name.."
             />
           </div>
           <div class="form-field">
@@ -21,11 +20,11 @@
               class="form-control"
               type="email"
               name="email"
-              placeholder="Email..."
+              placeholder="Email.."
             />
           </div>
         </div>
-        <!--Shipping address info -->
+
         <div id="shipping-info">
           <hr />
           <p>Shipping Information:</p>
@@ -35,7 +34,7 @@
               class="form-control"
               type="text"
               name="address"
-              placeholder="Address..."
+              placeholder="Address.."
             />
           </div>
           <div class="form-field">
@@ -43,7 +42,7 @@
               class="form-control"
               type="text"
               name="city"
-              placeholder="City..."
+              placeholder="City.."
             />
           </div>
           <div class="form-field">
@@ -51,7 +50,7 @@
               class="form-control"
               type="text"
               name="state"
-              placeholder="State..."
+              placeholder="State.."
             />
           </div>
           <div class="form-field">
@@ -59,7 +58,7 @@
               class="form-control"
               type="text"
               name="zipcode"
-              placeholder="Zip code..."
+              placeholder="Zip code.."
             />
           </div>
           <div class="form-field">
@@ -67,7 +66,7 @@
               class="form-control"
               type="text"
               name="country"
-              placeholder="Country..."
+              placeholder="Zip code.."
             />
           </div>
         </div>
@@ -81,43 +80,74 @@
         />
       </form>
     </div>
+
     <br />
-    <!--  can experiment by removing the hidden attribute -->
     <div class="box-element hidden" id="payment-info">
-      <small> Paypal Options </small>
+      <small>Paypal Options</small>
+      <button>Payment Continue</button>
+      <div id="paypal-button-container"></div>
     </div>
   </div>
 
-  <!-- order summary -->
   <div class="col-lg-6">
     <div class="box-element">
-      <a class="btn btn-outline-secondary" href="{% url 'cart' %}"
-        >&#x2190;Back to cart</a
+      <a class="btn btn-outline-dark" href="{% url 'cart' %}"
+        >&#x2190; Back to Cart</a
       >
       <hr />
       <h3>Order Summary</h3>
       <hr />
       {% for item in items %}
-      <!--  picked up the code from the cart.html section, as it is similar -->
       <div class="cart-row">
-        <!-- first div is for image -->
         <div style="flex: 2">
-          <img class="row-image" src="{{ item.product.imageURL }}" />
+          <img class="row-image" src="{{item.product.imageURL}}" />
         </div>
-        <div style="flex: 2"><p>{{ item.product.name }}</p></div>
-        <div style="flex: 1">
-          <p>${{ item.product.price | floatformat:2 }}</p>
-        </div>
-        <!-- quantity class: to add the arrow-up and arrow-down images -->
-        <div style="flex: 1"><p>{{ item.quantity }}</p></div>
+        <div style="flex: 2"><p>{{item.product.name}}</p></div>
+        <div style="flex: 1"><p>${{item.product.price|floatformat:2}}</p></div>
+        <div style="flex: 1"><p>x{{item.quantity}}</p></div>
       </div>
       {% endfor %}
-      <h5>Items: {{ order.get_cart_items }}</h5>
-      <h5>
-        Total: <strong>${{ order.get_cart_total | floatformat:2 }}</strong>
-      </h5>
+      <h5>Items: {{order.get_cart_items}}</h5>
+      <h5>Total: ${{order.get_cart_total|floatformat:2}}</h5>
     </div>
   </div>
 </div>
 
+<script type="text/javascript">
+  var shipping = "{{order.shipping}}";
+
+  if (shipping == "False") {
+    document.getElementById("shipping-info").innerHTML = "";
+  }
+
+  if (user != "AnonymousUser") {
+    document.getElementById("user-info").innerHTML = "";
+  }
+
+  if (shipping == "False" && user != "AnonymousUser") {
+    // if user is logged in, and  shipping is false, then hide the form
+    document.getElementById("form-wrapper").classList.add("hidden");
+    // if user is logged in, and  wants to buy item such that shipping is false, then show payment
+    document.getElementById("payment-info").classList.remove("hidden");
+  }
+
+  var form = document.getElementById("form");
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    console.log("Form Submitted...");
+    document.getElementById("form-button").classList.add("hidden");
+    document.getElementById("payment-info").classList.remove("hidden");
+  });
+
+  document
+    .getElementById("make-payment")
+    .addEventListener("click", function (e) {
+      submitFormData();
+    });
+
+  function submitFormData() {
+    console.log("Payment button clicked");
+  }
+</script>
 {% endblock content %}

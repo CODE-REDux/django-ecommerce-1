@@ -19,7 +19,7 @@ class Customer(models.Model):
 class Product(models.Model):
     name = models.CharField(max_length=200)
     price = models.FloatField()
-    # if is digital, it can't be shipped
+    # if is digital, it can't be shipped and default is set to false
     digital = models.BooleanField(default=False, null=True, blank=True)
     # image
     image = models.ImageField(null=True, blank=True)
@@ -78,6 +78,15 @@ class OrderItem(models.Model):
         total = self.product.price * self.quantity
         return total
         # now, we can call this quantity in the template 'cart.html'
+
+    @property
+    def shipping(self):
+        shipping = False
+        orderitems = self.orderitem_set.all()
+        for i in orderitems:
+            if i.product.digital == False:
+                shipping = True
+        return shipping
 
 
 class ShippingAddress(models.Model):
